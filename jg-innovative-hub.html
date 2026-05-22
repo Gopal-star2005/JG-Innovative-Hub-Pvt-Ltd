@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  (function () {
+    if (localStorage.getItem('jg-theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JG INNOVATIVE HUB Pvt Ltd — Innovation. Technology. Impact.</title>
@@ -22,9 +29,42 @@
     --text-muted: #4a5260;
     --border: rgba(255,255,255,0.07);
     --border-hover: rgba(0, 212, 170, 0.3);
+    --on-accent: #080c10;
+    --nav-scrolled-bg: rgba(8, 12, 16, 0.88);
+    --mobile-menu-bg: rgba(8, 12, 16, 0.97);
+    --hero-grid-line: rgba(255, 255, 255, 0.025);
+    --image-frame-bg: linear-gradient(135deg, #0d1117, #1a2332);
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --orb-opacity: 0.18;
+    --noise-opacity: 0.4;
+    --icon-subtle-border: rgba(255, 255, 255, 0.06);
     --font-display: 'Cormorant Garamond', serif;
     --font-ui: 'Syne', sans-serif;
     --font-body: 'Outfit', sans-serif;
+  }
+
+  [data-theme="light"] {
+    --bg-primary: #f4f7fa;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(0, 0, 0, 0.03);
+    --bg-card-hover: rgba(0, 0, 0, 0.06);
+    --accent: #00a884;
+    --accent-dim: rgba(0, 168, 132, 0.12);
+    --accent-glow: rgba(0, 168, 132, 0.25);
+    --text-primary: #0d1117;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(0, 168, 132, 0.35);
+    --on-accent: #ffffff;
+    --nav-scrolled-bg: rgba(255, 255, 255, 0.92);
+    --mobile-menu-bg: rgba(255, 255, 255, 0.98);
+    --hero-grid-line: rgba(0, 0, 0, 0.06);
+    --image-frame-bg: linear-gradient(135deg, #e8edf2, #f4f7fa);
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --orb-opacity: 0.12;
+    --noise-opacity: 0.15;
+    --icon-subtle-border: rgba(0, 0, 0, 0.08);
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,7 +88,7 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
-    opacity: 0.4;
+    opacity: var(--noise-opacity);
   }
 
   /* ─── NAVBAR ─── */
@@ -66,7 +106,7 @@
   }
 
   nav.scrolled {
-    background: rgba(8, 12, 16, 0.88);
+    background: var(--nav-scrolled-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-color: var(--border);
@@ -92,8 +132,40 @@
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
-    color: #080c10;
+    color: var(--on-accent);
   }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: color 0.25s, border-color 0.25s, background 0.25s;
+  }
+
+  .theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+
+  .theme-toggle .theme-icon-moon { display: none; }
+
+  [data-theme="light"] .theme-toggle .theme-icon-sun { display: none; }
+  [data-theme="light"] .theme-toggle .theme-icon-moon { display: block; }
 
   .nav-links {
     display: flex;
@@ -155,7 +227,7 @@
     display: none;
     position: fixed;
     top: 68px; left: 0; right: 0;
-    background: rgba(8,12,16,0.97);
+    background: var(--mobile-menu-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
@@ -206,7 +278,7 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(120px);
-    opacity: 0.18;
+    opacity: var(--orb-opacity);
     animation: orbFloat 8s ease-in-out infinite;
   }
 
@@ -228,8 +300,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      linear-gradient(var(--hero-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hero-grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
   }
@@ -333,7 +405,7 @@
     gap: 8px;
     padding: 14px 32px;
     background: var(--accent);
-    color: #080c10;
+    color: var(--on-accent);
     font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 600;
@@ -577,7 +649,7 @@
     border-color: var(--border-hover);
     background: var(--bg-card-hover);
     transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 60px var(--card-shadow);
   }
 
   .focus-card:hover::after { opacity: 1; }
@@ -714,7 +786,7 @@
     width: 100%;
     border-radius: 16px;
     overflow: hidden;
-    background: linear-gradient(135deg, #0d1117, #1a2332);
+    background: var(--image-frame-bg);
     border: 1px solid var(--border);
     position: relative;
   }
@@ -813,7 +885,7 @@
     border-color: var(--c-color, var(--border-hover));
     background: var(--bg-card-hover);
     transform: translateY(-3px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    box-shadow: 0 16px 48px var(--card-shadow);
   }
 
   .connect-icon {
@@ -825,7 +897,7 @@
     justify-content: center;
     font-size: 1.2rem;
     background: var(--accent-dim);
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid var(--icon-subtle-border);
     transition: background 0.3s, box-shadow 0.3s;
     color: var(--c-color, var(--accent));
   }
@@ -1034,8 +1106,14 @@
     <li><a href="#founders">Leadership</a></li>
     <li><a href="#connect" class="nav-cta">Connect</a></li>
   </ul>
-  <div class="hamburger" id="hamburger">
-    <span></span><span></span><span></span>
+  <div class="nav-actions">
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to light theme" title="Toggle theme">
+      <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
+      <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+    </button>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </nav>
 
@@ -1357,6 +1435,32 @@
 </footer>
 
 <script>
+  // THEME TOGGLE
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    const isLight = theme === 'light';
+    if (isLight) {
+      root.setAttribute('data-theme', 'light');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    localStorage.setItem('jg-theme', isLight ? 'light' : 'dark');
+    themeToggle.setAttribute(
+      'aria-label',
+      isLight ? 'Switch to dark theme' : 'Switch to light theme'
+    );
+    themeToggle.title = isLight ? 'Switch to dark theme' : 'Switch to light theme';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    applyTheme(isLight ? 'dark' : 'light');
+  });
+
+  applyTheme(localStorage.getItem('jg-theme') === 'light' ? 'light' : 'dark');
+
   // NAV SCROLL
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
